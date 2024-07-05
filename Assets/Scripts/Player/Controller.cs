@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class ControlPlayer : MonoBehaviour
+public class Controller : MonoBehaviour
 {
     private const string Run = "Run";
     private const string Jump = "Jump";

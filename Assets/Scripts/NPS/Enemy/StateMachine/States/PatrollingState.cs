@@ -22,7 +22,9 @@ public class PatrollingState : State
         Transform target = _points[_currentPoint];
         Vector3 direction = target.position - transform.position;
 
-        transform.position = Vector2.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position,
+                                                 target.position,
+                                                 _speed * Time.deltaTime);
 
         if (transform.position == target.position)
         {
@@ -32,13 +34,18 @@ public class PatrollingState : State
                 _currentPoint = 0;
         }
 
+        Turn(direction);
+    }
+
+    public void Turn(Vector3 direction)
+    {
         if (!IsFacingRight && direction.x > 0)
             Flip();
         else if (IsFacingRight && direction.x < 0)
             Flip();
     }
 
-    public void Flip()
+    private void Flip()
     {
         IsFacingRight = !IsFacingRight;
         Vector2 scaler = transform.localScale;

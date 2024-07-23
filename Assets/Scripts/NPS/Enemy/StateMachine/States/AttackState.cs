@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AttackState : State
 {
+    private const string Attack = "Attack";
+
     [SerializeField] private int _damage;
     [SerializeField] private int _delay;
 
@@ -18,16 +20,16 @@ public class AttackState : State
     {
         if (_lastAttackTime <= 0)
         {
-            Attack(Target);
+            Assault(Target);
             _lastAttackTime = _delay;
         }
 
         _lastAttackTime -= Time.deltaTime;
     }
 
-    private void Attack(Player target)
+    private void Assault(Player target)
     {
-        _animator.SetBool("Attack", true);
-        target.TakeDamage(_damage);
+        _animator.SetBool(Attack, true);
+        target.ComeUnderAttack(_damage);
     }
 }

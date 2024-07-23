@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class DistanceBumpTransition : Transition
 {
+    private const string Attack = "Attack";
+
     [SerializeField] private float _transitionRange;
     [SerializeField] private float _rangetSpread;
 
@@ -18,9 +20,11 @@ public class DistanceBumpTransition : Transition
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, Target.transform.position) < _transitionRange)
-            NeedTransit = true;
-        else
-            _animator.SetBool("Attack", false);
+        if (Target != null)
+            if (Vector2.Distance(transform.position,
+                                 Target.transform.position) < _transitionRange)
+                NeedTransit = true;
+            else
+                _animator.SetBool(Attack, false);
     }
 }

@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class SpawnFirstAidKit : MonoBehaviour
 {
-    [SerializeField] private FirstAidKit  _scroll;
-    [SerializeField] private int _numberScrolls;
+    [SerializeField] private FirstAidKit  _aidKit;
+    [SerializeField] private int _numberAidKit;
     [SerializeField] private float _interval;
 
     [SerializeField] private Transform _leftEdge;
     [SerializeField] private Transform _rightEdge;
-
-    [SerializeField] private Player _player;
 
     private WaitForSeconds _delay;
 
@@ -23,7 +21,7 @@ public class SpawnFirstAidKit : MonoBehaviour
     {
         _delay = new WaitForSeconds(_interval);
 
-        for (int i = 0; i < _numberScrolls; i++)
+        for (int i = 0; i < _numberAidKit; i++)
         {
             Instatiate();
 
@@ -31,21 +29,12 @@ public class SpawnFirstAidKit : MonoBehaviour
         }
     }
 
-    private void OnTakeScroll(FirstAidKit  scroll)
-    {
-        scroll.Matched -= OnTakeScroll;
-
-        _player.Treat(scroll.Reward);
-    }
-
     private void Instatiate()
     {
         int randomPositionX = Random.Range((int)_leftEdge.position.x, (int)_rightEdge.position.x);
 
-        FirstAidKit  scroll = Instantiate(_scroll,
+        FirstAidKit aidKit = Instantiate(_aidKit,
                         new Vector2(randomPositionX, _rightEdge.position.y),
                         Quaternion.identity).GetComponent<FirstAidKit >();
-
-        scroll.Matched += OnTakeScroll;
     }
 }

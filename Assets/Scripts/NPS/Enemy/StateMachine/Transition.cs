@@ -1,17 +1,20 @@
+using System;
 using UnityEngine;
 
 public class Transition : MonoBehaviour
 {
     [SerializeField] private State _targetState;
 
-    protected Player Target { get; private set; }
+    private Func<Player> _targetProvider;
+
+    protected Player Target => _targetProvider.Invoke();
 
     public State TargetState => _targetState;
     public bool NeedTransit { get; protected set; }
 
-    public void Init(Player target)
+    public void Init(Func<Player> targetProvider)
     {
-        Target = target;
+        _targetProvider = targetProvider;
     }
 
     public void OnEnable()

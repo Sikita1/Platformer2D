@@ -3,55 +3,62 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth;
+    private const string TakeDamage = "TakeDamage";
+
     [SerializeField] private Sword _sword;
+    [SerializeField] private Health _health;
+
+    [SerializeField] private StockAidKit _aidKit;
 
     public bool IsDie;
 
     private Animator _animator;
-    private BoxCollider2D _boxCollider;
-
-    public float CurrentHealth { get; private set; }
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _boxCollider = _sword.GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
         IsDie = false;
-        CurrentHealth = _maxHealth;
-
-        _boxCollider.enabled = false;
+        _health.FullLifes();
     }
 
-    public void OnAttack()
+    private void OnEnable()
     {
-        _boxCollider.enabled = true;
+        _aidKit.Treatment += OnTreatment;
     }
 
-    public void OffAttack()
+    private void OnDisable()
     {
-        _boxCollider.enabled = false;
+        _aidKit.Treatment -= OnTreatment;
     }
 
-    public void TakeDamage(float damage)
+    public void ActivateSword()
     {
-        CurrentHealth -= damage;
-        _animator.SetTrigger("TakeDamage");
+        _sword.Activate();
+    }
 
-        if (CurrentHealth <= 0)
+    public void DeactivateSword()
+    {
+        _sword.OffAttack();
+    }
+
+    public void ComeUnderAttack(float damage)
+    {
+        _health.TakeDamage(damage);
+        _animator.SetTrigger(TakeDamage);
+
+        if (_health.Current <= 0)
             Die();
     }
 
-    public void Treat(float reward)
+    private void OnTreatment(FirstAidKit aidKit)
     {
-        CurrentHealth += reward;
+        _health.Increase(aidKit.Reward);
 
-        if (CurrentHealth > _maxHealth)
-            CurrentHealth = _maxHealth;
+        aidKit.Disappear();
     }
 
     private void Die()

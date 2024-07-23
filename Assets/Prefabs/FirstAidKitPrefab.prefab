@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3111887172754932557}
   - component: {fileID: 1074408551524933015}
   m_Layer: 0
-  m_Name: FirstAidKit
+  m_Name: FirstAidKitPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.53126144, y: -4.604269}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -136,5 +136,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 62.96, y: 45.098793}
+  m_Size: {x: 44.89711, y: 41.557056}
   m_EdgeRadius: 0

@@ -1,11 +1,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Controller : MonoBehaviour
+public class KeystrokeHandler : MonoBehaviour
 {
     private const string Run = "Run";
-    private const string Jump = "Jump";
+    private const string Bounce = "Jump";
     private const string Attack = "Attack";
+    private const string Horizontal = "Horizontal";
 
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Transform _feetPosition;
@@ -17,6 +18,9 @@ public class Controller : MonoBehaviour
 
     private Animator _animator;
     private bool _facingRight = false;
+    private bool _isJump = false;
+
+    public bool IsGrounded { get; private set; }
 
     private void Start()
     {
@@ -25,16 +29,24 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        _moveInput = Input.GetAxis("Horizontal");
-        IsGrounded = Physics2D.OverlapCircle(_feetPosition.position, _checkRadius, _whatIsGround);
+        _moveInput = Input.GetAxis(Horizontal);
 
         RunPlayer();
-        JumpPlayer();
+        Jump();
         TurnPlayer();
         Assault();
     }
 
-    public bool IsGrounded { get; private set; }
+    private void FixedUpdate()
+    {
+        IsGrounded = Physics2D.OverlapCircle(_feetPosition.position, _checkRadius, _whatIsGround);
+
+        if (_isJump)
+        {
+            _rigidbody.AddForce(Vector2.up * _jumpForce);
+            _isJump = false;
+        }
+    }
 
     private void RunPlayer()
     {
@@ -56,16 +68,16 @@ public class Controller : MonoBehaviour
         }
     }
 
-    private void JumpPlayer()
+    private void Jump()
     {
         if (IsGrounded == true && Input.GetKey(KeyCode.Space))
         {
-            _rigidbody.AddForce(Vector2.up * _jumpForce);
-            _animator.SetBool(Jump, true);
+            _isJump = true;
+            _animator.SetBool(Bounce, true);
         }
         else
         {
-            _animator.SetBool(Jump, false);
+            _animator.SetBool(Bounce, false);
         }
     }
 

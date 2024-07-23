@@ -6,7 +6,9 @@ public class BreakDistanceTransition : Transition
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, Target.transform.position) > _distanceBump.TransitionRange)
-            NeedTransit = true;
+        if (Target != null)
+            if (Vector2.Distance(transform.position,
+                                 Target.transform.position) > _distanceBump.TransitionRange)
+                NeedTransit = true;
     }
 }

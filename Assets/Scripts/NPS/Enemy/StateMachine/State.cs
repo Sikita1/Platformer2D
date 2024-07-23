@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,19 +6,21 @@ public abstract class State : MonoBehaviour
 {
     [SerializeField] private List<Transition> _transitions;
 
-    protected Player Target { get; private set; }
+    private Func<Player> _targetProvider;
 
-    public void Enter(Player target)
+    protected Player Target => _targetProvider.Invoke();
+
+    public void Enter(Func<Player> targetProvider)
     {
         if(enabled == false)
         {
-            Target = target;
+            _targetProvider = targetProvider;
             enabled = true;
 
-            foreach (var transition in _transitions)
+            foreach (Transition transition in _transitions)
             {
                 transition.enabled = true;
-                transition.Init(Target);
+                transition.Init(_targetProvider);
             }
         }
     }
@@ -25,7 +28,7 @@ public abstract class State : MonoBehaviour
     public void Exit()
     {
         if (enabled == true)
-            foreach (var transition in _transitions)
+            foreach (Transition transition in _transitions)
                 transition.enabled = false;
 
         enabled = false;
@@ -33,7 +36,7 @@ public abstract class State : MonoBehaviour
 
     public State GetNextState()
     {
-        foreach (var transition in _transitions)
+        foreach (Transition transition in _transitions)
             if (transition.NeedTransit)
                 return transition.TargetState;
 

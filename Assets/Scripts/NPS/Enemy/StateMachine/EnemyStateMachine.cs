@@ -4,15 +4,30 @@ using UnityEngine;
 public class EnemyStateMachine : MonoBehaviour
 {
     [SerializeField] private State _firstState;
+    [SerializeField] private Enemy _enemy;
 
     private Player _target;
     private State _currentState;
 
-    public State Current => _currentState;
+    private void OnEnable()
+    {
+        _enemy.FindTarget += OnFindTarget;
+    }
+
+    private void OnDisable()
+    {
+        _enemy.FindTarget -= OnFindTarget;
+    }
+
+    private void OnFindTarget(Player target)
+    {
+        _target = target;
+
+        GoIntoState();
+    }
 
     private void Start()
     {
-        _target = GetComponent<Enemy>().Target;
         Reset(_firstState);
     }
 
@@ -21,7 +36,7 @@ public class EnemyStateMachine : MonoBehaviour
         if (_currentState == null)
             return;
 
-        var nextState = _currentState.GetNextState();
+        State nextState = _currentState.GetNextState();
 
         if (nextState != null)
             Transit(nextState);
@@ -31,18 +46,20 @@ public class EnemyStateMachine : MonoBehaviour
     {
         _currentState = startState;
 
-        if (_currentState != null)
-            _currentState.Enter(_target);
+        GoIntoState();
     }
 
     private void Transit(State nextState)
     {
-        if(_currentState != null)
-            _currentState.Exit();
+        _currentState?.Exit();
 
         _currentState = nextState;
 
-        if (_currentState != null)
-            _currentState.Enter(_target);
+        GoIntoState();
+    }
+
+    private void GoIntoState()
+    {
+        _currentState?.Enter(() => _target);
     }
 }

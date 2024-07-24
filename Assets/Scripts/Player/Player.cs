@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const string TakeDamage = "TakeDamage";
+    private const string Perish = "Die";
 
     [SerializeField] private Sword _sword;
     [SerializeField] private Health _health;
@@ -64,6 +65,6 @@ public class Player : MonoBehaviour
     private void Die()
     {
         IsDie = true;
-        _animator.SetTrigger("Die");
+        _animator.SetTrigger(Perish);
     }
 }

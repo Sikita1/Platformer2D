@@ -39,7 +39,9 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        IsGrounded = Physics2D.OverlapCircle(_feetPosition.position, _checkRadius, _whatIsGround);
+        IsGrounded = Physics2D.OverlapCircle(_feetPosition.position,
+                                             _checkRadius,
+                                             _whatIsGround);
 
         if (_isJump)
         {
@@ -70,7 +72,7 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void Jump()
     {
-        if (IsGrounded == true && Input.GetKey(KeyCode.Space))
+        if (IsGrounded && Input.GetKey(KeyCode.Space))
         {
             _isJump = true;
             _animator.SetBool(Bounce, true);
@@ -83,7 +85,7 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void Assault()
     {
-        if (IsGrounded == true && Input.GetKey(KeyCode.F))
+        if (IsGrounded && Input.GetKey(KeyCode.F))
             _animator.SetTrigger(Attack);
     }
 
@@ -97,7 +99,7 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void RunAnimPlayer()
     {
-        if (IsGrounded == true)
+        if (IsGrounded)
             _animator.SetBool(Run, true);
     }
 

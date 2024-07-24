@@ -31,7 +31,8 @@ public class SpawnFirstAidKit : MonoBehaviour
 
     private void Instatiate()
     {
-        int randomPositionX = Random.Range((int)_leftEdge.position.x, (int)_rightEdge.position.x);
+        int randomPositionX = Random.Range((int)_leftEdge.position.x,
+                                           (int)_rightEdge.position.x);
 
         FirstAidKit aidKit = Instantiate(_aidKit,
                         new Vector2(randomPositionX, _rightEdge.position.y),

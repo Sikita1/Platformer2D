@@ -25,6 +25,11 @@ public class Scanner : MonoBehaviour
         _coroutine = StartCoroutine(Scan());
     }
 
+    private void OnEnable()
+    {
+        StopCoroutine(_coroutine);
+    }
+
     private IEnumerator Scan()
     {
         while (true)

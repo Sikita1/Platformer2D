@@ -12,9 +12,9 @@ public class TargetDieTransition : Transition
         _animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Target.IsDie == true)
+        if (Target.IsDie)
         {
             NeedTransit = true;
             _animator.SetBool(Attack, false);

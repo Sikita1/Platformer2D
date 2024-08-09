@@ -1,6 +1,5 @@
 using UnityEngine;
 
-//[RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
     private const string TakeDamage = "TakeDamage";
@@ -14,11 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] private AnimatorUnit _animator;
 
     public bool IsDie;
-
-    //private void Awake()
-    //{
-    //    _animator = GetComponent<Animator>();
-    //}
 
     private void Start()
     {

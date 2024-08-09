@@ -6,9 +6,9 @@ public class AttackState : State
 
     [SerializeField] private int _damage;
     [SerializeField] private int _delay;
+    [SerializeField] private AnimatorUnit _animator;
 
     private float _lastAttackTime;
-    [SerializeField] private AnimatorUnit _animator;
 
     private void Update()
     {

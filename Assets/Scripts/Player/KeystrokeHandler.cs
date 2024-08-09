@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class KeystrokeHandler : MonoBehaviour
 {
     private const string Run = "Run";
@@ -16,19 +15,13 @@ public class KeystrokeHandler : MonoBehaviour
     [SerializeField] private float _moveInput;
     [SerializeField] private float _speed;
 
-    [SerializeField] private Transform _transformSliser;
     [SerializeField] private Transform _transformPlayer;
+    [SerializeField] private AnimatorUnit _animator;
 
-    private Animator _animator;
     private bool _facingRight = false;
     private bool _isJump = false;
 
     public bool IsGrounded { get; private set; }
-
-    private void Start()
-    {
-        _animator = GetComponent<Animator>();
-    }
 
     private void Update()
     {
@@ -78,18 +71,18 @@ public class KeystrokeHandler : MonoBehaviour
         if (IsGrounded && Input.GetKey(KeyCode.Space))
         {
             _isJump = true;
-            _animator.SetBool(Bounce, true);
+            _animator.Animator.SetBool(Bounce, true);
         }
         else
         {
-            _animator.SetBool(Bounce, false);
+            _animator.Animator.SetBool(Bounce, false);
         }
     }
 
     private void Assault()
     {
         if (IsGrounded && Input.GetKey(KeyCode.F))
-            _animator.SetTrigger(Attack);
+            _animator.Animator.SetTrigger(Attack);
     }
 
     private void TurnPlayer()
@@ -103,19 +96,19 @@ public class KeystrokeHandler : MonoBehaviour
     private void RunAnimPlayer()
     {
         if (IsGrounded)
-            _animator.SetBool(Run, true);
+            _animator.Animator.SetBool(Run, true);
     }
 
     private void StopAnimPlayer()
     {
-        _animator.SetBool(Run, false);
+        _animator.Animator.SetBool(Run, false);
     }
 
     private void Flip()
     {
         _facingRight = !_facingRight;
-        Vector2 scaler = transform.localScale;
+        Vector2 scaler = _transformPlayer.localScale;
         scaler.x *= -1;
-        transform.localScale = scaler;
+        _transformPlayer.localScale = scaler;
     }
 }

@@ -1,17 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class PursuitState : State
 {
     [SerializeField] private float _speed;
     [SerializeField] private PatrollingState _movement;
 
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    [SerializeField] private AnimatorUnit _animator;
 
     private void Update()
     {
@@ -29,6 +23,6 @@ public class PursuitState : State
 
     private void OnDisable()
     {
-        _animator.StopPlayback();
+        _animator.Animator.StopPlayback();
     }
 }

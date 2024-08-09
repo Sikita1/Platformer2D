@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Health _health;
     [SerializeField] private int _reward;
     [SerializeField] private Scanner _scanner;
+
+    [SerializeField] private EnemyStateMachine _unit;
     
     private Player _target;
 
@@ -39,6 +41,6 @@ public class Enemy : MonoBehaviour
         _health.TakeDamage(damage);
 
         if (_health.Current <= 0)
-            Destroy(gameObject);
+            Destroy(_unit.gameObject);
     }
 }

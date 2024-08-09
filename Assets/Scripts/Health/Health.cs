@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
 
     public void FullLifes()
     {
-        _currentValue = _maxValue;
+        _currentValue = 80f;
         ChangedHealth?.Invoke(Current);
     }
 

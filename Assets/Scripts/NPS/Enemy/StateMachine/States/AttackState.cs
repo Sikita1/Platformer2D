@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class AttackState : State
 {
     private const string Attack = "Attack";
@@ -9,12 +8,7 @@ public class AttackState : State
     [SerializeField] private int _delay;
 
     private float _lastAttackTime;
-    private Animator _animator;
-
-    private void Start()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    [SerializeField] private AnimatorUnit _animator;
 
     private void Update()
     {
@@ -29,7 +23,7 @@ public class AttackState : State
 
     private void Assault(Player target)
     {
-        _animator.SetBool(Attack, true);
+        _animator.Animator.SetBool(Attack, true);
         target.ComeUnderAttack(_damage);
     }
 }

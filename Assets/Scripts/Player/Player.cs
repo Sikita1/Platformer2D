@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
     private const string TakeDamage = "TakeDamage";
@@ -11,14 +11,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] private StockAidKit _aidKit;
 
+    [SerializeField] private AnimatorUnit _animator;
+
     public bool IsDie;
 
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    //private void Awake()
+    //{
+    //    _animator = GetComponent<Animator>();
+    //}
 
     private void Start()
     {
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     public void ComeUnderAttack(float damage)
     {
         _health.TakeDamage(damage);
-        _animator.SetTrigger(TakeDamage);
+        _animator.Animator.SetTrigger(TakeDamage);
 
         if (_health.Current <= 0)
             Die();
@@ -65,6 +65,6 @@ public class Player : MonoBehaviour
     private void Die()
     {
         IsDie = true;
-        _animator.SetTrigger(Perish);
+        _animator.Animator.SetTrigger(Perish);
     }
 }

@@ -5,6 +5,8 @@ public class PatrollingState : State
     [SerializeField] private Transform _path;
     [SerializeField] private float _speed;
 
+    [SerializeField] private Transform _transform;
+
     private Transform[] _points;
     private int _currentPoint;
     public bool IsFacingRight { get; private set; } = true;
@@ -48,8 +50,8 @@ public class PatrollingState : State
     private void Flip()
     {
         IsFacingRight = !IsFacingRight;
-        Vector2 scaler = transform.localScale;
+        Vector2 scaler = _transform.localScale;
         scaler.x *= -1;
-        transform.localScale = scaler;
+        _transform.localScale = scaler;
     }
 }

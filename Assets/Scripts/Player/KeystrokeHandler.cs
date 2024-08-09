@@ -16,6 +16,9 @@ public class KeystrokeHandler : MonoBehaviour
     [SerializeField] private float _moveInput;
     [SerializeField] private float _speed;
 
+    [SerializeField] private Transform _transformSliser;
+    [SerializeField] private Transform _transformPlayer;
+
     private Animator _animator;
     private bool _facingRight = false;
     private bool _isJump = false;
@@ -91,7 +94,7 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void TurnPlayer()
     {
-        if (!_facingRight && _moveInput > 0)
+        if (_facingRight == false && _moveInput > 0)
             Flip();
         else if (_facingRight && _moveInput < 0)
             Flip();

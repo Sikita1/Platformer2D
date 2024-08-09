@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
@@ -7,9 +8,12 @@ public class Health : MonoBehaviour
 
     public float Current => _currentValue;
 
+    public event UnityAction<float> ChangedHealth;
+
     public void FullLifes()
     {
         _currentValue = _maxValue;
+        ChangedHealth?.Invoke(Current);
     }
 
     public void TakeDamage(float damage)
@@ -18,6 +22,8 @@ public class Health : MonoBehaviour
             return;
 
         _currentValue = Mathf.Max(_currentValue - damage, 0);
+
+        ChangedHealth?.Invoke(Current);
     }
 
     public void Increase(float life)
@@ -26,5 +32,7 @@ public class Health : MonoBehaviour
             return;
 
         _currentValue = Mathf.Min(_currentValue + life, _maxValue);
+
+        ChangedHealth?.Invoke(Current);
     }
 }

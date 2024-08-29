@@ -8,7 +8,7 @@ public class TargetDieTransition : Transition
 
     private void Update()
     {
-        if (Target.IsDie)
+        if (Target.IsDie && Target?.IsVampirismActiv == false)
         {
             NeedTransit = true;
             _animator.Animator.SetBool(Attack, false);

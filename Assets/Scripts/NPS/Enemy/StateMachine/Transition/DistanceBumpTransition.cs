@@ -18,7 +18,7 @@ public class DistanceBumpTransition : Transition
 
     private void Update()
     {
-        if (Target != null)
+        if (Target != null && Target?.IsVampirismActiv == false)
             if (Vector2.Distance(transform.position,
                                  Target.transform.position) < _transitionRange)
                 NeedTransit = true;

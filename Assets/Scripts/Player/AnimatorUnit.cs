@@ -11,5 +11,4 @@ public class AnimatorUnit : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-
 }

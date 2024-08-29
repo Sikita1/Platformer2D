@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class KeystrokeHandler : MonoBehaviour
@@ -6,6 +7,12 @@ public class KeystrokeHandler : MonoBehaviour
     private const string Bounce = "Jump";
     private const string Attack = "Attack";
     private const string Horizontal = "Horizontal";
+
+    private const KeyCode Vampire = KeyCode.Q;
+    private const KeyCode Weaponize = KeyCode.F;
+    private const KeyCode GoLeft = KeyCode.A;
+    private const KeyCode GoRight = KeyCode.D;
+    private const KeyCode JumpUp = KeyCode.Space;
 
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Transform _feetPosition;
@@ -18,10 +25,18 @@ public class KeystrokeHandler : MonoBehaviour
     [SerializeField] private Transform _transformPlayer;
     [SerializeField] private AnimatorUnit _animator;
 
+    public event Action Vampirism;
+
     private bool _facingRight = false;
     private bool _isJump = false;
 
     public bool IsGrounded { get; private set; }
+    public bool CanMove { get; private set; }
+
+    private void Start()
+    {
+        LetMove();
+    }
 
     private void Update()
     {
@@ -31,6 +46,7 @@ public class KeystrokeHandler : MonoBehaviour
         Jump();
         TurnPlayer();
         Assault();
+        ActivateVampirism();
     }
 
     private void FixedUpdate()
@@ -46,19 +62,31 @@ public class KeystrokeHandler : MonoBehaviour
         }
     }
 
+    public void LetMove() =>
+        CanMove = true;
+
+    public void ForbidMove() =>
+        CanMove = false;
+
     private void RunPlayer()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(GoRight))
         {
-            transform.Translate(_speed * Time.deltaTime, 0, 0);
+            if (CanMove)
+            {
+                transform.Translate(_speed * Time.deltaTime, 0, 0);
 
-            RunAnimPlayer();
+                RunAnimPlayer();
+            }
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(GoLeft))
         {
-            transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
+            if (CanMove)
+            {
+                transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
 
-            RunAnimPlayer();
+                RunAnimPlayer();
+            }
         }
         else
         {
@@ -66,12 +94,21 @@ public class KeystrokeHandler : MonoBehaviour
         }
     }
 
+    private void ActivateVampirism()
+    {
+        if (Input.GetKeyDown(Vampire))
+            Vampirism?.Invoke();
+    }
+
     private void Jump()
     {
-        if (IsGrounded && Input.GetKey(KeyCode.Space))
+        if (IsGrounded && Input.GetKey(JumpUp))
         {
-            _isJump = true;
-            _animator.Animator.SetBool(Bounce, true);
+            if (CanMove)
+            {
+                _isJump = true;
+                _animator.Animator.SetBool(Bounce, true);
+            }
         }
         else
         {
@@ -81,7 +118,7 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void Assault()
     {
-        if (IsGrounded && Input.GetKey(KeyCode.F))
+        if (IsGrounded && Input.GetKey(Weaponize))
             _animator.Animator.SetTrigger(Attack);
     }
 

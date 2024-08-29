@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float _currentValue;
 
     public float Current => _currentValue;
+    public float MaxValue => _maxValue;
 
     public event UnityAction<float> ChangedHealth;
 

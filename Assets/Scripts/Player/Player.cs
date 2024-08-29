@@ -7,12 +7,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Sword _sword;
     [SerializeField] private Health _health;
-
     [SerializeField] private StockAidKit _aidKit;
-
     [SerializeField] private AnimatorUnit _animator;
+    [SerializeField] private Vampirism _vampirism;
+    [SerializeField] private KeystrokeHandler _handler;
 
-    public bool IsDie;
+    public bool IsDie { get; private set; }
+    public bool IsVampirismActiv { get; private set; }
 
     private void Start()
     {
@@ -23,11 +24,15 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _aidKit.Treatment += OnTreatment;
+        _vampirism.Activ += OnVampireActive;
+        _vampirism.ActivOff += OnVampireActiveOff;
     }
 
     private void OnDisable()
     {
         _aidKit.Treatment -= OnTreatment;
+        _vampirism.Activ -= OnVampireActive;
+        _vampirism.ActivOff -= OnVampireActiveOff;
     }
 
     public void ActivateSword()
@@ -47,6 +52,18 @@ public class Player : MonoBehaviour
 
         if (_health.Current <= 0)
             Die();
+    }
+
+    private void OnVampireActive()
+    {
+        IsVampirismActiv = true;
+        _handler.ForbidMove();
+    }
+
+    private void OnVampireActiveOff()
+    {
+        IsVampirismActiv = false;
+        _handler.LetMove();
     }
 
     private void OnTreatment(FirstAidKit aidKit)

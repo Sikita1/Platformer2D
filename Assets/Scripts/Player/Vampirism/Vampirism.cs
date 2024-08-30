@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Vampirism : MonoBehaviour
 {
-    private const string Vampire = "Vampire";
+    private const string VampireAnimActiv = "Vampire";
 
     [SerializeField] private ZoneVampirism _zone;
     [SerializeField] private Health _vampireHealth;
@@ -26,12 +26,12 @@ public class Vampirism : MonoBehaviour
     public event Action ActivOff;
 
     public bool IsWorking { get; private set; }
-    public bool IsCanWorking { get; private set; }
+    public bool CanWorking { get; private set; }
 
     private void Start()
     {
         _timeCurrent = _absorptionTime;
-        IsCanWorking = true;
+        CanWorking = true;
     }
 
     private void OnEnable()
@@ -50,7 +50,7 @@ public class Vampirism : MonoBehaviour
     }
 
     private void OnRecharding() =>
-        IsCanWorking = true;
+        CanWorking = true;
 
     private void OnVampirism()
     {
@@ -72,7 +72,7 @@ public class Vampirism : MonoBehaviour
         if (enemy != null)
             _victim = enemy.GetComponent<Health>();
 
-        if (IsCanWorking && enemy != null)
+        if (CanWorking && enemy != null)
         {
             while (_vampireHealth.Current < _vampireHealth.MaxValue
                    && _victim.Current > 0
@@ -80,19 +80,19 @@ public class Vampirism : MonoBehaviour
                    && enemy != null
                    && IsWorking)
             {
-                IsCanWorking = false;
+                CanWorking = false;
                 _timerView.StartTimer(IsWorking, 0, speed);
                 _vampireHealth.Increase(_suctionPower);
                 enemy.TakeDamage(_suctionPower);
                 _timeCurrent--;
-                _animator.Animator.SetBool(Vampire, true);
+                _animator.Animator.SetBool(VampireAnimActiv, true);
 
                 yield return _wait;
             }
         }
 
         ActivOff?.Invoke();
-        _animator.Animator.SetBool(Vampire, false);
+        _animator.Animator.SetBool(VampireAnimActiv, false);
         IsWorking = false;
         _timeCurrent = _absorptionTime;
 

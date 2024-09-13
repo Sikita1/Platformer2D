@@ -11,4 +11,7 @@ public class AnimatorUnit : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
+
+    protected void ActiveBoolAnimation(string animationName, bool value) =>
+        Animator.SetBool(animationName, value);
 }

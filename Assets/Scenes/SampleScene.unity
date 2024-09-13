@@ -1936,9 +1936,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 802057479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ef485b30d796b4ba52c563213ee3fc, type: 3}
+  m_Script: {fileID: 11500000, guid: e18f315105c1c1449a0bed4f3f504501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attack: {fileID: 1524644779}
+  _trans: {fileID: 1524644787}
+  _pursuit: {fileID: 1524644783}
+  _distanceBump: {fileID: 1524644780}
+  _targetDie: {fileID: 1524644777}
 --- !u!61 &813679615
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3501,7 +3506,6 @@ MonoBehaviour:
   _moveInput: 0
   _speed: 10
   _transformPlayer: {fileID: 1670789330289441323}
-  _animator: {fileID: 1670789330289441324}
 --- !u!50 &1410465293
 Rigidbody2D:
   serializedVersion: 4
@@ -3860,7 +3864,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 1524644785}
-  _animator: {fileID: 802057498}
 --- !u!114 &1524644778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3893,7 +3896,6 @@ MonoBehaviour:
   - {fileID: 1524644788}
   _damage: 5
   _delay: 1
-  _animator: {fileID: 802057498}
 --- !u!114 &1524644780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3909,7 +3911,6 @@ MonoBehaviour:
   _targetState: {fileID: 1524644779}
   _transitionRange: 3
   _rangetSpread: 0.2
-  _animator: {fileID: 802057498}
 --- !u!114 &1524644782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3941,7 +3942,6 @@ MonoBehaviour:
   - {fileID: 1524644788}
   _speed: 5
   _movement: {fileID: 1524644785}
-  _animator: {fileID: 802057498}
 --- !u!114 &1524644784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4003,7 +4003,6 @@ MonoBehaviour:
   - {fileID: 1524644780}
   - {fileID: 1524644782}
   - {fileID: 1524644784}
-  _animator: {fileID: 802057498}
 --- !u!114 &1524644788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5080,7 +5079,7 @@ GameObject:
   - component: {fileID: 813679616}
   - component: {fileID: 813679617}
   - component: {fileID: 1670789330289441325}
-  - component: {fileID: 1670789330289441324}
+  - component: {fileID: 1670789330289441328}
   - component: {fileID: 1670789330289441326}
   - component: {fileID: 1670789330289441327}
   m_Layer: 7
@@ -5221,18 +5220,6 @@ Transform:
   m_Father: {fileID: 1410465289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1670789330289441324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569652438779388488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ef485b30d796b4ba52c563213ee3fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1670789330289441325
 Animator:
   serializedVersion: 5
@@ -5268,7 +5255,6 @@ MonoBehaviour:
   _sword: {fileID: 980955508}
   _health: {fileID: 813679616}
   _aidKit: {fileID: 813679617}
-  _animator: {fileID: 1670789330289441324}
   _vampirism: {fileID: 1670789330289441327}
   _handler: {fileID: 1410465291}
 --- !u!114 &1670789330289441327
@@ -5286,8 +5272,22 @@ MonoBehaviour:
   _zone: {fileID: 126488430}
   _vampireHealth: {fileID: 813679616}
   _handler: {fileID: 1410465291}
-  _animator: {fileID: 1670789330289441324}
   _timerView: {fileID: 1420897754}
+--- !u!114 &1670789330289441328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569652438779388488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843990e39a932cc4baf21286b643f3e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vampirism: {fileID: 1670789330289441327}
+  _handler: {fileID: 1410465291}
+  _player: {fileID: 1670789330289441326}
 --- !u!4 &1770433945593382620
 Transform:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PursuitState : State
@@ -5,7 +6,7 @@ public class PursuitState : State
     [SerializeField] private float _speed;
     [SerializeField] private PatrollingState _movement;
 
-    [SerializeField] private AnimatorUnit _animator;
+    public event Action StopAnimation;
 
     private void Update()
     {
@@ -23,6 +24,6 @@ public class PursuitState : State
 
     private void OnDisable()
     {
-        _animator.Animator.StopPlayback();
+        StopAnimation?.Invoke();
     }
 }

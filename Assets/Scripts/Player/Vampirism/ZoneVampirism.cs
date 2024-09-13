@@ -1,18 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ZoneVampirism : MonoBehaviour
 {
-    public Enemy Enemy { get; private set; }
+    private List<Enemy> _enemiesDiscovered = new List<Enemy>();
+
+    public List<Enemy> EnemiesDiscovered => _enemiesDiscovered;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
-            Enemy = enemy;
+            _enemiesDiscovered.Add(enemy);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Enemy>())
-            Enemy = null;
+            _enemiesDiscovered.Clear();
     }
 }

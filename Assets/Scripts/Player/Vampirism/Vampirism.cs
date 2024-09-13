@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Vampirism : MonoBehaviour
 {
-    private const string VampireAnimActiv = "Vampire";
-
     [SerializeField] private ZoneVampirism _zone;
     [SerializeField] private Health _vampireHealth;
     [SerializeField] private KeystrokeHandler _handler;
-    [SerializeField] private AnimatorUnit _animator;
     [SerializeField] private TimerVampirism _timerView;
 
-    private Health _victim;
+    private Health _victimHealth;
 
     private float _absorptionTime = 6f;
     private float _timeCurrent;
@@ -26,73 +23,72 @@ public class Vampirism : MonoBehaviour
     public event Action ActivOff;
 
     public bool IsWorking { get; private set; }
-    public bool CanWorking { get; private set; }
 
     private void Start()
     {
         _timeCurrent = _absorptionTime;
-        CanWorking = true;
     }
 
     private void OnEnable()
     {
         _handler.Vampirism += OnVampirism;
-        _timerView.Recharging += OnRecharding;
     }
 
     private void OnDisable()
     {
         _handler.Vampirism -= OnVampirism;
-        _timerView.Recharging -= OnRecharding;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);
     }
 
-    private void OnRecharding() =>
-        CanWorking = true;
-
     private void OnVampirism()
     {
-        IsWorking = true;
-        Activ?.Invoke();
+        Enemy enemy = null;
 
-        if (_coroutine == null)
-            _coroutine = StartCoroutine(Absorption());
+        if (_zone.EnemiesDiscovered != null)
+            for (int i = 0; i < _zone.EnemiesDiscovered.Count; i++)
+                enemy = _zone.EnemiesDiscovered[i];
+
+        if (CanWork(enemy))
+        {
+            IsWorking = true;
+            _coroutine = StartCoroutine(Absorption(enemy));
+            Activ?.Invoke();
+        }
     }
 
-    private IEnumerator Absorption()
+    private IEnumerator Absorption(Enemy enemy)
     {
         _wait = new WaitForSeconds(1f);
-        
-        Enemy enemy = _zone.Enemy;
 
         float speed = 1 / _absorptionTime;
 
-        if (enemy != null)
-            _victim = enemy.GetComponent<Health>();
+        _victimHealth = enemy.GetComponent<Health>();
 
-        if (CanWorking && enemy != null)
+        while (_vampireHealth.Current < _vampireHealth.MaxValue
+                && _victimHealth.Current > 0
+                && _timeCurrent > 0
+                && IsWorking)
         {
-            while (_vampireHealth.Current < _vampireHealth.MaxValue
-                   && _victim.Current > 0
-                   && _timeCurrent > 0
-                   && enemy != null
-                   && IsWorking)
+            _timerView.StartTimer(IsWorking, 0, speed);
+
+            if (_victimHealth.Current < _suctionPower)
             {
-                CanWorking = false;
-                _timerView.StartTimer(IsWorking, 0, speed);
+                _suctionPower--;
+            }
+            else
+            {
                 _vampireHealth.Increase(_suctionPower);
                 enemy.TakeDamage(_suctionPower);
-                _timeCurrent--;
-                _animator.Animator.SetBool(VampireAnimActiv, true);
-
-                yield return _wait;
             }
+
+            _timeCurrent--;
+
+            yield return _wait;
         }
 
         ActivOff?.Invoke();
-        _animator.Animator.SetBool(VampireAnimActiv, false);
         IsWorking = false;
         _timeCurrent = _absorptionTime;
 
@@ -100,7 +96,11 @@ public class Vampirism : MonoBehaviour
             StopCoroutine(_coroutine);
 
         _timerView.StartTimer(IsWorking == false, 1, speed);
-
         _coroutine = null;
     }
+
+    private bool CanWork(Enemy enemy) =>
+        (enemy != null
+         && _coroutine == null
+         && _timerView.TimerFull);
 }

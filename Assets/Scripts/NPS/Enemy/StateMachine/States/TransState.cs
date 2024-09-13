@@ -1,16 +1,15 @@
-using UnityEngine;
+using System;
 
 public class TransState : State
 {
-    private const string Victim = "Victim";
-
-    [SerializeField] private AnimatorUnit _animator;
+    public event Action ComeOut;
+    public event Action Entered;
 
     private void Update()
     {
-        if(Target?.IsVampirismActiv == false)
-            _animator.Animator.SetBool(Victim, false);
+        if (Target?.IsVampirismActiv == false)
+            ComeOut?.Invoke();
         else
-            _animator.Animator.SetBool(Victim, true);
+            Entered?.Invoke();
     }
 }

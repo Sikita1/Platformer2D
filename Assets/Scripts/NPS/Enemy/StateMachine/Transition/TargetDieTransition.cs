@@ -1,17 +1,15 @@
-using UnityEngine;
+using UnityEngine.Events;
 
 public class TargetDieTransition : Transition
 {
-    [SerializeField] private AnimatorUnit _animator;
-
-    private const string Attack = "Attack";
+    public event UnityAction StopAttack;
 
     private void Update()
     {
         if (Target.IsDie && Target?.IsVampirismActiv == false)
         {
             NeedTransit = true;
-            _animator.Animator.SetBool(Attack, false);
+            StopAttack?.Invoke();
         }
     }
 }

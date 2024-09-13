@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 public class AttackState : State
 {
-    private const string Attack = "Attack";
+    //private const string Attack = "Attack";
 
     [SerializeField] private int _damage;
     [SerializeField] private int _delay;
-    [SerializeField] private AnimatorUnit _animator;
+    //[SerializeField] private AnimatorUnit _animator;
+
+    public event Action Attack;
 
     private float _lastAttackTime;
 
@@ -23,7 +26,8 @@ public class AttackState : State
 
     private void Assault(Player target)
     {
-        _animator.Animator.SetBool(Attack, true);
+        Attack?.Invoke();
+        //_animator.Animator.SetBool(Attack, true);
         target.ComeUnderAttack(_damage);
     }
 }

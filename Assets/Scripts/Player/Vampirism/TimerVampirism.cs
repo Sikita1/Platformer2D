@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +8,7 @@ public class TimerVampirism : MonoBehaviour
 
     private Coroutine _coroutine;
 
-    public event Action Recharging;
+    public bool TimerFull => _image.fillAmount == 1f;
 
     private void Awake()
     {
@@ -32,8 +31,5 @@ public class TimerVampirism : MonoBehaviour
 
             yield return null;
         }
-
-        if (_image.fillAmount == 1f)
-            Recharging?.Invoke();
     }
 }

@@ -1,16 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    private const string TakeDamage = "TakeDamage";
-    private const string Perish = "Die";
-
     [SerializeField] private Sword _sword;
     [SerializeField] private Health _health;
     [SerializeField] private StockAidKit _aidKit;
-    [SerializeField] private AnimatorUnit _animator;
     [SerializeField] private Vampirism _vampirism;
     [SerializeField] private KeystrokeHandler _handler;
+
+    public event UnityAction TakeDamage;
+    public event UnityAction Die;
 
     public bool IsDie { get; private set; }
     public bool IsVampirismActiv { get; private set; }
@@ -48,10 +48,10 @@ public class Player : MonoBehaviour
     public void ComeUnderAttack(float damage)
     {
         _health.TakeDamage(damage);
-        _animator.Animator.SetTrigger(TakeDamage);
+        TakeDamage?.Invoke();
 
         if (_health.Current <= 0)
-            Die();
+            PassAway();
     }
 
     private void OnVampireActive()
@@ -73,9 +73,9 @@ public class Player : MonoBehaviour
         aidKit.Disappear();
     }
 
-    private void Die()
+    private void PassAway()
     {
         IsDie = true;
-        _animator.Animator.SetTrigger(Perish);
+        Die?.Invoke();
     }
 }

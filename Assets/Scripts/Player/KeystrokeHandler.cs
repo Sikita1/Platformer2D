@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class KeystrokeHandler : MonoBehaviour
 {
-    private const string Run = "Run";
-    private const string Bounce = "Jump";
-    private const string Attack = "Attack";
     private const string Horizontal = "Horizontal";
 
     private const KeyCode Vampire = KeyCode.Q;
@@ -23,9 +20,13 @@ public class KeystrokeHandler : MonoBehaviour
     [SerializeField] private float _speed;
 
     [SerializeField] private Transform _transformPlayer;
-    [SerializeField] private AnimatorUnit _animator;
 
     public event Action Vampirism;
+    public event Action StartedJump;
+    public event Action FinishedJump;
+    public event Action Attack;
+    public event Action StartRunning;
+    public event Action Stay;
 
     private bool _facingRight = false;
     private bool _isJump = false;
@@ -107,19 +108,19 @@ public class KeystrokeHandler : MonoBehaviour
             if (CanMove)
             {
                 _isJump = true;
-                _animator.Animator.SetBool(Bounce, true);
+                StartedJump?.Invoke();
             }
         }
         else
         {
-            _animator.Animator.SetBool(Bounce, false);
+            FinishedJump?.Invoke();
         }
     }
 
     private void Assault()
     {
         if (IsGrounded && Input.GetKey(Weaponize))
-            _animator.Animator.SetTrigger(Attack);
+            Attack?.Invoke();
     }
 
     private void TurnPlayer()
@@ -133,13 +134,11 @@ public class KeystrokeHandler : MonoBehaviour
     private void RunAnimPlayer()
     {
         if (IsGrounded)
-            _animator.Animator.SetBool(Run, true);
+            StartRunning?.Invoke();
     }
 
-    private void StopAnimPlayer()
-    {
-        _animator.Animator.SetBool(Run, false);
-    }
+    private void StopAnimPlayer() =>
+        Stay?.Invoke();
 
     private void Flip()
     {

@@ -1,13 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DistanceBumpTransition : Transition
 {
-    private const string Attack = "Attack";
-
     [SerializeField] private float _transitionRange;
     [SerializeField] private float _rangetSpread;
 
-    [SerializeField] private AnimatorUnit _animator;
+    public event UnityAction AttackOff;
 
     public float TransitionRange => _transitionRange;
 
@@ -23,6 +22,6 @@ public class DistanceBumpTransition : Transition
                                  Target.transform.position) < _transitionRange)
                 NeedTransit = true;
             else
-                _animator.Animator.SetBool(Attack, false);
+                AttackOff?.Invoke();
     }
 }

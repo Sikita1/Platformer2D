@@ -14,4 +14,7 @@ public class AnimatorUnit : MonoBehaviour
 
     protected void ActiveBoolAnimation(string animationName, bool value) =>
         Animator.SetBool(animationName, value);
+
+    protected void ActiveTriggerAnimation(string animationName) =>
+        Animator.SetTrigger(animationName);
 }

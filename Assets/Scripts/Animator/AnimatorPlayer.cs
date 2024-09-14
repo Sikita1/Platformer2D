@@ -52,7 +52,7 @@ public class AnimatorPlayer : AnimatorUnit
         ActiveBoolAnimation(Bounce, false);
 
     private void OnAttack() =>
-        Animator.SetTrigger(Attack);
+        ActiveTriggerAnimation(Attack);
 
     private void OnStartRunning() =>
         ActiveBoolAnimation(Run, true);
@@ -61,8 +61,8 @@ public class AnimatorPlayer : AnimatorUnit
         ActiveBoolAnimation(Run, false);
 
     private void OnTakeDamage() =>
-        Animator.SetTrigger(TakeDamage);
+        ActiveTriggerAnimation(TakeDamage);
 
     private void OnDie() =>
-        Animator.SetTrigger(Perish);
+        ActiveTriggerAnimation(Perish);
 }

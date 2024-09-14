@@ -15,8 +15,8 @@ public class AnimatorPlayer : AnimatorUnit
 
     private void OnEnable()
     {
-        _vampirism.Activ += OnActive;
-        _vampirism.ActivOff += OnActiveOff;
+        _vampirism.Activated += OnActivated;
+        _vampirism.Deactivated += OnDeactivated;
         _handler.StartedJump += OnStartedJump;
         _handler.FinishedJump += OnFinishedJump;
         _handler.Attack += OnAttack;
@@ -28,8 +28,8 @@ public class AnimatorPlayer : AnimatorUnit
 
     private void OnDisable()
     {
-        _vampirism.Activ -= OnActive;
-        _vampirism.ActivOff -= OnActiveOff;
+        _vampirism.Activated -= OnActivated;
+        _vampirism.Deactivated -= OnDeactivated;
         _handler.StartedJump -= OnStartedJump;
         _handler.FinishedJump -= OnFinishedJump;
         _handler.Attack -= OnAttack;
@@ -39,10 +39,10 @@ public class AnimatorPlayer : AnimatorUnit
         _player.Die -= OnDie;
     }
 
-    private void OnActive() =>
+    private void OnActivated() =>
         ActiveBoolAnimation(VampireAnimActiv, true);
 
-    private void OnActiveOff() =>
+    private void OnDeactivated() =>
         ActiveBoolAnimation(VampireAnimActiv, false);
 
     private void OnStartedJump() =>

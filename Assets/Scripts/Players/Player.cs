@@ -24,15 +24,15 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _aidKit.Treatment += OnTreatment;
-        _vampirism.Activ += OnVampireActive;
-        _vampirism.ActivOff += OnVampireActiveOff;
+        _vampirism.Activated += OnVampireActive;
+        _vampirism.Deactivated += OnVampireActiveOff;
     }
 
     private void OnDisable()
     {
         _aidKit.Treatment -= OnTreatment;
-        _vampirism.Activ -= OnVampireActive;
-        _vampirism.ActivOff -= OnVampireActiveOff;
+        _vampirism.Activated -= OnVampireActive;
+        _vampirism.Deactivated -= OnVampireActiveOff;
     }
 
     public void ActivateSword()

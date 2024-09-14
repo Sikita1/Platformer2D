@@ -13,16 +13,21 @@ public class Vampirism : MonoBehaviour
 
     private float _absorptionTime = 6f;
     private float _timeCurrent;
-    private int _suctionPower = 5;
+    private int _suctionPower;
 
     private Coroutine _coroutine;
 
     private WaitForSeconds _wait;
 
-    public event Action Activ;
-    public event Action ActivOff;
+    public event Action Activated;
+    public event Action Deactivated;
 
     public bool IsWorking { get; private set; }
+
+    private void Awake()
+    {
+        _wait = new WaitForSeconds(1f);
+    }
 
     private void Start()
     {
@@ -44,23 +49,20 @@ public class Vampirism : MonoBehaviour
 
     private void OnVampirism()
     {
-        Enemy enemy = null;
+        if (_zone.TryGetEnemy(out Enemy enemy) == false)
+            return;
 
-        if (_zone.EnemiesDiscovered != null)
-            for (int i = 0; i < _zone.EnemiesDiscovered.Count; i++)
-                enemy = _zone.EnemiesDiscovered[i];
-
-        if (CanWork(enemy))
+        if (CanUseAbsorption())
         {
             IsWorking = true;
             _coroutine = StartCoroutine(Absorption(enemy));
-            Activ?.Invoke();
+            Activated?.Invoke();
         }
     }
 
     private IEnumerator Absorption(Enemy enemy)
     {
-        _wait = new WaitForSeconds(1f);
+        _suctionPower = 5;
 
         float speed = 1 / _absorptionTime;
 
@@ -88,7 +90,7 @@ public class Vampirism : MonoBehaviour
             yield return _wait;
         }
 
-        ActivOff?.Invoke();
+        Deactivated?.Invoke();
         IsWorking = false;
         _timeCurrent = _absorptionTime;
 
@@ -99,8 +101,7 @@ public class Vampirism : MonoBehaviour
         _coroutine = null;
     }
 
-    private bool CanWork(Enemy enemy) =>
-        (enemy != null
-         && _coroutine == null
+    private bool CanUseAbsorption() =>
+        (_coroutine == null
          && _timerView.TimerFull);
 }

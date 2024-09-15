@@ -21,8 +21,8 @@ public class ZoneVampirism : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<Enemy>())
-            _enemiesDiscovered.Clear();
+        if (collision.TryGetComponent(out Enemy enemy))
+            _enemiesDiscovered.Remove(enemy);
     }
 
     public bool TryGetEnemy(out Enemy enemy)

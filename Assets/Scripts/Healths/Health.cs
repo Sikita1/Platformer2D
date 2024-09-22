@@ -6,15 +6,15 @@ public class Health : MonoBehaviour
     [SerializeField] private float _maxValue;
     [SerializeField] private float _currentValue;
 
+    public event UnityAction<float> ChangedValue;
+    
     public float Current => _currentValue;
     public float MaxValue => _maxValue;
-
-    public event UnityAction<float> ChangedHealth;
 
     public void FullLifes()
     {
         _currentValue = 80f;
-        ChangedHealth?.Invoke(Current);
+        ChangedValue?.Invoke(Current);
     }
 
     public void TakeDamage(float damage)
@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
 
         _currentValue = Mathf.Max(_currentValue - damage, 0);
 
-        ChangedHealth?.Invoke(Current);
+        ChangedValue?.Invoke(Current);
     }
 
     public void Increase(float life)
@@ -34,6 +34,6 @@ public class Health : MonoBehaviour
 
         _currentValue = Mathf.Min(_currentValue + life, _maxValue);
 
-        ChangedHealth?.Invoke(Current);
+        ChangedValue?.Invoke(Current);
     }
 }

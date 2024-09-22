@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Vampirism _vampirism;
     [SerializeField] private KeystrokeHandler _handler;
 
-    public event UnityAction TakeDamage;
-    public event UnityAction Die;
+    public event UnityAction TakingDamage;
+    public event UnityAction Died;
 
     public bool IsDie { get; private set; }
     public bool IsVampirismActiv { get; private set; }
@@ -35,20 +35,16 @@ public class Player : MonoBehaviour
         _vampirism.Deactivated -= OnVampireActiveOff;
     }
 
-    public void ActivateSword()
-    {
+    public void ActivateSword() =>
         _sword.Activate();
-    }
 
-    public void DeactivateSword()
-    {
-        _sword.OffAttack();
-    }
+    public void DeactivateSword() =>
+        _sword.Deactivate();
 
     public void ComeUnderAttack(float damage)
     {
         _health.TakeDamage(damage);
-        TakeDamage?.Invoke();
+        TakingDamage?.Invoke();
 
         if (_health.Current <= 0)
             PassAway();
@@ -76,6 +72,6 @@ public class Player : MonoBehaviour
     private void PassAway()
     {
         IsDie = true;
-        Die?.Invoke();
+        Died?.Invoke();
     }
 }

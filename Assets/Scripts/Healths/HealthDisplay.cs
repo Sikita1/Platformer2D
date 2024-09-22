@@ -6,12 +6,12 @@ public class HealthDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        _unit.ChangedHealth += OnHealthChanged;
+        _unit.ChangedValue += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _unit.ChangedHealth -= OnHealthChanged;
+        _unit.ChangedValue -= OnHealthChanged;
     }
 
     protected virtual void OnHealthChanged(float health) { }

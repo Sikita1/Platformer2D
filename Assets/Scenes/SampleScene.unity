@@ -3459,6 +3459,7 @@ GameObject:
   - component: {fileID: 1410465289}
   - component: {fileID: 1410465293}
   - component: {fileID: 1410465291}
+  - component: {fileID: 1410465294}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3505,7 +3506,7 @@ MonoBehaviour:
   _jumpForce: 100
   _moveInput: 0
   _speed: 10
-  _transformPlayer: {fileID: 1670789330289441323}
+  _turning: {fileID: 1410465294}
 --- !u!50 &1410465293
 Rigidbody2D:
   serializedVersion: 4
@@ -3527,6 +3528,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1410465294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410465288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a78b519ae11f549be51faa207442f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 1670789330289441323}
 --- !u!1 &1420897750
 GameObject:
   m_ObjectHideFlags: 0
@@ -3827,6 +3841,7 @@ GameObject:
   - component: {fileID: 1524644779}
   - component: {fileID: 1524644778}
   - component: {fileID: 1524644777}
+  - component: {fileID: 1524644789}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -3972,7 +3987,7 @@ MonoBehaviour:
   - {fileID: 1524644788}
   _path: {fileID: 843511764}
   _speed: 2
-  _transform: {fileID: 802057480}
+  _turning: {fileID: 1524644789}
 --- !u!114 &1524644786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4016,6 +4031,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 1524644787}
+--- !u!114 &1524644789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524644775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a78b519ae11f549be51faa207442f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 802057480}
 --- !u!1 &1527604759
 GameObject:
   m_ObjectHideFlags: 0

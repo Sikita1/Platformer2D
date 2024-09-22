@@ -22,8 +22,8 @@ public class AnimatorPlayer : AnimatorUnit
         _handler.Attack += OnAttack;
         _handler.StartRunning += OnStartRunning;
         _handler.Stay += OnStay;
-        _player.TakeDamage += OnTakeDamage;
-        _player.Die += OnDie;
+        _player.TakingDamage += OnTakeDamage;
+        _player.Died += OnDie;
     }
 
     private void OnDisable()
@@ -35,8 +35,8 @@ public class AnimatorPlayer : AnimatorUnit
         _handler.Attack -= OnAttack;
         _handler.StartRunning -= OnStartRunning;
         _handler.Stay -= OnStay;
-        _player.TakeDamage -= OnTakeDamage;
-        _player.Die -= OnDie;
+        _player.TakingDamage -= OnTakeDamage;
+        _player.Died -= OnDie;
     }
 
     private void OnActivated() =>

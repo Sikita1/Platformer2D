@@ -2,12 +2,8 @@ using UnityEngine;
 
 public class FirstAidKit : MonoBehaviour
 {
-    [SerializeField] private float _reward;
+    [field: SerializeField] public float Reward;
 
-    public float Reward => _reward;
-
-    public void Disappear()
-    {
+    public void Disappear() =>
         Destroy(gameObject);
-    }
 }

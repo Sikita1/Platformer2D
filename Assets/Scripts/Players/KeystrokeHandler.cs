@@ -19,7 +19,9 @@ public class KeystrokeHandler : MonoBehaviour
     [SerializeField] private float _moveInput;
     [SerializeField] private float _speed;
 
-    [SerializeField] private Transform _transformPlayer;
+    [SerializeField] private Turning _turning;
+    
+    private bool _isJump = false;
 
     public event Action Vampirism;
     public event Action StartedJump;
@@ -27,9 +29,6 @@ public class KeystrokeHandler : MonoBehaviour
     public event Action Attack;
     public event Action StartRunning;
     public event Action Stay;
-
-    private bool _facingRight = false;
-    private bool _isJump = false;
 
     public bool IsGrounded { get; private set; }
     public bool CanMove { get; private set; }
@@ -125,10 +124,10 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void TurnPlayer()
     {
-        if (_facingRight == false && _moveInput > 0)
-            Flip();
-        else if (_facingRight && _moveInput < 0)
-            Flip();
+        if (_turning.FacingRight == false && _moveInput > 0)
+            _turning.Flip();
+        else if (_turning.FacingRight && _moveInput < 0)
+            _turning.Flip();
     }
 
     private void RunAnimPlayer()
@@ -139,12 +138,4 @@ public class KeystrokeHandler : MonoBehaviour
 
     private void StopAnimPlayer() =>
         Stay?.Invoke();
-
-    private void Flip()
-    {
-        _facingRight = !_facingRight;
-        Vector2 scaler = _transformPlayer.localScale;
-        scaler.x *= -1;
-        _transformPlayer.localScale = scaler;
-    }
 }

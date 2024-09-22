@@ -5,11 +5,10 @@ public class PatrollingState : State
     [SerializeField] private Transform _path;
     [SerializeField] private float _speed;
 
-    [SerializeField] private Transform _transform;
+    [SerializeField] private Turning _turning;
 
     private Transform[] _points;
     private int _currentPoint;
-    public bool IsFacingRight { get; private set; } = true;
 
     private void Start()
     {
@@ -41,17 +40,9 @@ public class PatrollingState : State
 
     public void Turn(Vector3 direction)
     {
-        if (!IsFacingRight && direction.x > 0)
-            Flip();
-        else if (IsFacingRight && direction.x < 0)
-            Flip();
-    }
-
-    private void Flip()
-    {
-        IsFacingRight = !IsFacingRight;
-        Vector2 scaler = _transform.localScale;
-        scaler.x *= -1;
-        _transform.localScale = scaler;
+        if (_turning.FacingRight && direction.x > 0)
+            _turning.Flip();
+        else if (_turning.FacingRight == false && direction.x < 0)
+            _turning.Flip();
     }
 }

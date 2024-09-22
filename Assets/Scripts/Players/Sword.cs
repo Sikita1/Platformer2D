@@ -14,7 +14,7 @@ public class Sword : MonoBehaviour
 
     private void Start()
     {
-        OffAttack();
+        Deactivate();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -28,7 +28,7 @@ public class Sword : MonoBehaviour
         _collider2D.enabled = true;
     }
 
-    public void OffAttack()
+    public void Deactivate()
     {
         _collider2D.enabled = false;
     }

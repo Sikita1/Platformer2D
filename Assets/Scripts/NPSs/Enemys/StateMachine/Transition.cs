@@ -17,11 +17,6 @@ public class Transition : MonoBehaviour
         _targetProvider = targetProvider;
     }
 
-    private void Update()
-    {
-        Debug.Log(Target);
-    }
-
     public void OnEnable()
     {
         NeedTransit = false;
